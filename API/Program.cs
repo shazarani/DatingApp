@@ -1,13 +1,10 @@
-using System.Text;
 using API;
 using API.Extensions;
 using API.Interfaces;
+using API.Middleware;
 using API.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +24,7 @@ var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 app.UseAuthentication();// do you have a valid token
 app.UseAuthorization();// if you have a valid token what you allowed to do 
